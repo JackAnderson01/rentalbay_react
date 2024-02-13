@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-hex: #1c1c1c;
+  --background-hex: #fff;
+}
+
+
+   /* width */
+   ::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #fff;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #F85E00;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #f85f00cb;
+  } 
+  
+  
+
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  scrollbar-base-color: #fff;
+  scrollbar-color: #F85E00;
+  scrollbar-width: 3px;
+}
+
+body {
+  color: var(--foreground-hex);
+  background: var(--background-hex);
+  font-family: sans-serif, 'Inter';
+}
+
+
+
+  
+  /* input number correction */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
+  
+  input[type=number]{
+    -moz-appearance: textfield;
+  }
+
+  .swiper-button-prev {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 10px !important;
+    color: #fff !important;
+    border-radius: 100px;
+    position: absolute !important;
+    top: 50%;
+    left: 0px !important;
+    z-index: 1000 !important;
+  }
+  
+  .swiper-button-next {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 10px !important;
+    color: #fff !important;
+    border-radius: 100px;
+    position: absolute !important;
+    top: 50%;
+    right: 0px !important;
+    z-index: 1000 !important;
+
+  }
+
+
+/* Input range */
