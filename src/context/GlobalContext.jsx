@@ -7,8 +7,8 @@ export const GlobalContextProvider = ({ children }) => {
 
     const cartRef = useRef(null);
     const filterRef = useRef(null);
-    const baseUrl = "https://c06e-103-138-50-154.ngrok-free.app/api"
-    const imageUrl = "https://c06e-103-138-50-154.ngrok-free.app/storage/"
+    const baseUrl = "http://192.168.18.45:8000/api"
+    const imageUrl = "http://192.168.18.45:8000/storage/"
 
     const toggleCart = () => {
         // Check if the cartRef.current is not null before accessing its classList
