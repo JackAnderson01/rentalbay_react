@@ -9,37 +9,11 @@ const NormalProductCard = ({ product }) => {
     const { imageUrl } = useContext(GlobalContext)
 
     const [image, setImage] = useState(`${imageUrl}${product?.images[0]?.url}`)
-    const [imageSrc, setImageSrc] = useState(null);
-
-    useEffect(() => {
-
-        const headers = { 
-            'ngrok-skip-browser-warning': true,
-         }
-        // Fetching the image
-        axios
-        .get(image, { headers })
-          .then(response => response.arrayBuffer())
-          .then(arrayBuffer => {
-            // Converting array buffer to base64
-            const base64Image = btoa(
-              new Uint8Array(arrayBuffer)
-                .reduce((data, byte) => data + String.fromCharCode(byte), '')
-            );
-            // Setting the image source
-            setImageSrc(`data:image/jpeg;base64,${base64Image}`);
-          })
-          .catch(error => {
-            console.error('Error fetching the image: ', error);
-          });
-      }, [image]);
-
-
 
     return (
         <div className='group w-auto h-56  lg:h-80 cursor-pointer transition-all duration-150 bg-gray-50  hover:bg-gray-100 p-2'>
             <Link to="/product/12" className='w-full h-full flex flex-col'>
-                <img src={imageSrc} className='w-full h-[60%]' />
+                <img src={image} className='w-full h-[60%] object-cover  mix-blend-multiply' />
 
                 <div className='w-auto h-[40%]  flex flex-col gap-1 mt-2 justify-start items-start'>
                     <h1 className='text-sm lg:text-xl  font-semibold text-gray-900'>

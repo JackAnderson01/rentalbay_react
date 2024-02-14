@@ -1,11 +1,15 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useContext } from 'react'
+import { GlobalContext } from '../../context/GlobalContext';
 import { GoKebabHorizontal } from "react-icons/go";
 import ProductCrudModal from './ProductCrudModal';
 import { Link } from 'react-router-dom';
 
 const MyProductsCard = ({ product }) => {
 
+    const { imageUrl } = useContext(GlobalContext)
+
     const [isCrudOpen, setIsCrudOpen] = useState(false)
+    const [image, setImage] = useState(`${imageUrl}${product?.images[0]?.url}`)
 
     const toggleModal = () => {
         setIsCrudOpen((prev) => !prev)
@@ -17,8 +21,8 @@ const MyProductsCard = ({ product }) => {
                 <GoKebabHorizontal className='text-black' />
             </button>
             <ProductCrudModal isOpen={isCrudOpen} setIsCrudOpen={setIsCrudOpen} product={product} />
-            <Link to="/product/12" className='w-full h-full flex flex-col'>
-                <img src={product?.image} className='w-full h-[60%] ' />
+            <Link to={`/products/${product?.id}`} className='w-full h-full flex flex-col'>
+                <img src={image} className='w-full h-[60%] object-cover mix-blend-multiply' />
 
                 <div className='w-auto h-[40%]  flex flex-col gap-1 mt-2 justify-start items-start'>
                     <h1 className='text-md lg:text-xl font-bold lg:font-semibold text-gray-900'>

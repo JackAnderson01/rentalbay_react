@@ -10,52 +10,29 @@ const StoreProductCard = ({ product }) => {
 
     const [image, setImage] = useState(`${imageUrl}${product?.images[0]?.url}`)
 
-    const [imageSrc, setImageSrc] = useState(null);
-
-    useEffect(() => {
-
-        const headers = {
-            'ngrok-skip-browser-warning': true,
-        }
-        // Fetching the image
-        axios
-            .get(image, { headers })
-            .then(response => response.arrayBuffer())
-            .then(arrayBuffer => {
-                // Converting array buffer to base64
-                const base64Image = btoa(
-                    new Uint8Array(arrayBuffer)
-                        .reduce((data, byte) => data + String.fromCharCode(byte), '')
-                );
-                // Setting the image source
-                setImageSrc(`data:image/jpeg;base64,${base64Image}`);
-            })
-            .catch(error => {
-                console.error('Error fetching the image: ', error);
-            });
-    }, [image]);
 
     return (
         <div className='group w-auto h-56  lg:h-80  cursor-pointer transition-all duration-150 bg-gray-50 hover:bg-gray-100 p-2'>
-            <Link to="/product/12" className='w-full h-full flex flex-col'>
-                <img src="https://rentalbay-alpha.vercel.app/hero.png" className='w-full h-[60%]' />
+            <Link to={product?.id} className='w-full h-full flex flex-col relative'>
+                {/* Verified Icon */}
+                <div className='group absolute z-20 top-2 right-2 flex items-center justify-start  w-auto h-6 p-[2px] rounded-full bg-orange-500 '>
+                    <span className='w-5 h-5 rounded-full bg-orange-500 text-white group-hover:bg-white group-hover:text-orange-500 flex items-center justify-center '>
+                        <FaCheck className='text-lg ' />
+                    </span>
+                    <span className='hidden group-hover:flex items-center justify-center text-xs font-semibold h-5 px-1 rounded-r-full bg-orange-500 text-white'>
+                        Verified
+                    </span>
+                </div>
+                <img src={image} className='w-full h-[60%] object-cover mix-blend-multiply' />
 
 
                 <div className='w-auto h-[40%]  flex flex-col gap-1 mt-2 justify-start items-start relative'>
-                    {/* Verified Icon */}
-                    <div className='group absolute top-0 right-2 flex items-center justify-start  w-auto h-8 p-[2px] rounded-full bg-orange-500 '>
-                        <span className='w-7 h-7 rounded-full bg-orange-500 text-white group-hover:bg-white group-hover:text-orange-500 flex items-center justify-center '>
-                            <FaCheck className='text-xl ' />
-                        </span>
-                        <span className='hidden group-hover:flex items-center justify-center text-sm font-semibold h-8 px-2 rounded-r-full bg-orange-500 text-white'>
-                            Verified
-                        </span>
-                    </div>
+
 
 
                     {/* Others */}
                     <h1 className='text-sm lg:text-xl  font-semibold text-gray-900'>
-                    {product?.name?.length > 25  ? product?.name.slice(0,25) + "..." : product?.name}
+                        {product?.name?.length > 25 ? product?.name.slice(0, 25) + "..." : product?.name}
 
                     </h1>
                     <div className='flex justify-start items-center gap-1'>
