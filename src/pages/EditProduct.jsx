@@ -106,6 +106,7 @@ const EditProduct = () => {
     useEffect(() => {
         setImages(response?.images?.length > 0 ? response?.images : [])
         setName(response?.name)
+        setLocation(response?.address)
         setState(response?.state)
         setCity(response?.city)
         setPricePerFour(response?.four_hours_rate)
@@ -137,7 +138,7 @@ const EditProduct = () => {
                 "description": description,
                 "state": state,
                 "city": city,
-                // "address": location, 
+                "address": location, 
                 "pickup_lat": 41.6528,
                 "pickup_long": 83.5379,
                 "four_hours_rate": pricePerFour,
@@ -217,7 +218,7 @@ const EditProduct = () => {
 
                 {/* Map container */}
                 <div className='w-full h-auto flex flex-col gap-2 justify-start items-start'>
-                    <img src='/map.png' className='w-full' />
+                    <img src='/map.png' className='w-full h-56' />
                 </div>
 
 
