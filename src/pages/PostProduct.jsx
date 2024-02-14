@@ -112,7 +112,7 @@ const PostProduct = () => {
                     "description": description,
                     "state": state,
                     "city": city,
-                    // "address": location, 
+                    "address": location,
                     "pickup_lat": 41.6528,
                     "pickup_long": 83.5379,
                     "four_hours_rate": pricePerFour,
@@ -192,7 +192,7 @@ const PostProduct = () => {
 
                 {/* Map container */}
                 <div className='w-full h-auto flex flex-col gap-2 justify-start items-start'>
-                    <img src='/map.png' className='w-full' />
+                    <img src='/map.png' className='w-full h-56' />
                 </div>
 
 
