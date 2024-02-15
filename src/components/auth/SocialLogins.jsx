@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useContext } from 'react'
 // firebase imports:
 import { auth, googleProvider, appleProvider } from "../../firebase/firebase"

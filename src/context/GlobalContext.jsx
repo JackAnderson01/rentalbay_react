@@ -1,4 +1,3 @@
-"use client";
 import React, { createContext, useState, useRef } from "react";
 export const GlobalContext = createContext();
 
