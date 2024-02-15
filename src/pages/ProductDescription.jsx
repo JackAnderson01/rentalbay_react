@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -8,74 +8,68 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import ImageGallery from '../components/ProductDescription/ImageGallery';
 import DescriptionContainer from '../components/ProductDescription/DescriptionContainer';
 import ReviewContainer from '../components/ProductDescription/ReviewContainer';
 import MayLike from '../components/ProductDescription/MayLike';
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import axios from "axios"
+import { GlobalContext } from '../context/GlobalContext';
+import { differenceInDays, addDays, format } from 'date-fns';
 
 
 export default function ProductDescription() {
 
-    const params = useParams()
-    const [id, setId] = useState(null)
-    useEffect(()=>{
-        setId(params?.id)
-    },[])
+    const params = useParams();
+    const navigate = useNavigate()
+    const { baseUrl, setError } = useContext(GlobalContext)
 
-    const dummyArr = [
-        {
-            "image": "https://images.unsplash.com/photo-1560343090-f0409e92791a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D",
-            "name": "Shoes",
-            "link": "/"
-        },
-        {
-            "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D",
-            "name": "Glasses",
-            "link": "/"
-        },
-        {
-            "image": "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D",
-            "name": "Lipsticks",
-            "link": "/"
-        },
-        {
-            "image": "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D",
-            "name": "Headphones",
-            "link": "/"
-        },
-        {
-            "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            "name": "Watches",
-            "link": "/"
-        },
-        {
-            "image": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D",
-            "name": "Coffee",
-            "link": "/"
-        },
-        {
-            "image": "https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D",
-            "name": "Camera",
-            "link": "/"
-        },
-        {
-            "image": "https://images.unsplash.com/photo-1491637639811-60e2756cc1c7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D",
-            "name": "Bags",
-            "link": "/"
-        },
-        {
-            "image": "https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D",
-            "name": "Camera",
-            "link": "/"
-        },
-        {
-            "image": "https://images.unsplash.com/photo-1491637639811-60e2756cc1c7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D",
-            "name": "Bags",
-            "link": "/"
-        },
-    ]
+    const [loading, setLoading] = useState(false)
+    const [response, setResponse] = useState({})
+
+
+    const getIndividualProduct = () => {
+        const token = localStorage.getItem("token");
+
+
+        if (token) {
+            const headers = {
+                'ngrok-skip-browser-warning': true,
+            };
+
+            axios
+                .get(`${baseUrl}/products/${params?.id}`, { headers })
+                .then((res) => {
+                    console.log(res)
+                    setResponse(res?.data?.data?.product)
+                })
+                .catch((error) => {
+                    setError(error?.response?.data?.error)
+                });
+        } else {
+            navigate("/login/");
+        }
+    }
+
+    useEffect(() => {
+        getIndividualProduct()
+    }, [])
+
+    const generateDateRange = (from, till) => {
+        const dates = [];
+        let currentDate = new Date(from);
+
+        while (currentDate <= till) {
+            dates.push(format(currentDate, 'dd'));
+            currentDate = addDays(currentDate, 1);
+        }
+
+        return dates;
+    };
+
+
+    const [dates, setDates] = useState([]);
 
     const [windowWidth, setWindowWidth] = useState(9);
 
@@ -90,23 +84,11 @@ export default function ProductDescription() {
         };
     }, []);
 
-    const reviews = [
-        {
-            "name": "Joshua Arther",
-            "image": 'https://randomuser.me/api/portraits/men/54.jpg',
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse id augue aliquam, venenatis mi in, dictum nisl. Nam ligula mi, varius sit amet nisi ut, viverra sollicitudin augue."
-        },
-        {
-            "name": "Jack Anderson",
-            "image": 'https://randomuser.me/api/portraits/men/33.jpg',
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse id augue aliquam, venenatis mi in, dictum nisl. Nam ligula mi, varius sit amet nisi ut, viverra sollicitudin augue."
-        },
-        {
-            "name": "Jane Doe",
-            "image": 'https://randomuser.me/api/portraits/women/31.jpg',
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse id augue aliquam, venenatis mi in, dictum nisl. Nam ligula mi, varius sit amet nisi ut, viverra sollicitudin augue."
-        },
-    ]
+    useEffect(() => {
+        setDates(generateDateRange(new Date(response?.available_from), new Date(response?.available_till)))
+    }, [response])
+
+
 
     const slidesPerView = windowWidth > 1400 ? 9 : windowWidth > 720 ? 7 : 6
 
@@ -122,30 +104,31 @@ export default function ProductDescription() {
                     <MdOutlineKeyboardArrowRight />
                 </Link>
 
-                <span className='text-[#959595] flex justify-start items-center text-sm font-semibold transition-all duration-150 hover:text-black'>
-                    Category
+                <span className='text-[#959595] capitalize flex justify-start items-center text-sm font-semibold transition-all duration-150 hover:text-black'>
+                    {response?.sub_category?.category?.name}
                     <MdOutlineKeyboardArrowRight />
 
                 </span>
-                <span className='text-[#959595] flex justify-start items-center text-sm font-semibold transition-all duration-150 hover:text-black'>
-                    Sub Category
+                <span className='text-[#959595] capitalize flex justify-start items-center text-sm font-semibold transition-all duration-150 hover:text-black'>
+                    {response?.sub_category?.name}
+
                     <MdOutlineKeyboardArrowRight />
 
                 </span>
-                <span className=' text-sm font-semibold transition-all duration-150 text-black'>
-                    {dummyArr[0]?.name}
+                <span className='capitalize text-sm font-semibold transition-all duration-150 text-black'>
+                    {response?.name}
                 </span>
             </div>
 
             <div className="w-full h-auto flex flex-col lg:flex-row justify-start items-start gap-6">
-                <ImageGallery images={dummyArr} />
+                <ImageGallery images={response?.images} />
 
                 <div className='w-full lg:w-[48%] h-auto flex flex-col justify-start gap-4 items-start'>
 
                     <div className='w-auto h-auto flex flex-col  justify-start items-start'>
 
                         <h1 className='text-2xl lg:text-3xl font-bold text-gray-900'>
-                            Decent Modern Chair - Single Seater
+                            {response?.name}
                         </h1>
 
                         <div className='w-auto flex gap-4 justify-between items-center'>
@@ -176,7 +159,7 @@ export default function ProductDescription() {
                             Pickup Location
                         </h1>
                         <span className='text-xs lg:text-md text-[#959595] font-medium'>
-                            Star City Mall, USA
+                            {response?.address},{response?.city},{response?.state},USA
                         </span>
                     </div>
 
@@ -189,7 +172,7 @@ export default function ProductDescription() {
                         <div className='w-auto h-auto flex justify-start items-center gap-6'>
                             <div className='flex justify-start items-center gap-1'>
                                 <span className='text-sm lg:text-xl font-bold text-orange-500'>
-                                    $25
+                                    ${response?.four_hours_rate}
                                 </span>
                                 <span className='text-sm lg:text-xl font-medium text-[#959595]'>
                                     /4hr
@@ -198,7 +181,8 @@ export default function ProductDescription() {
 
                             <div className='flex justify-start items-center gap-1'>
                                 <span className='text-sm lg:text-xl font-bold text-orange-500'>
-                                    $100
+                                    ${response?.twelve_hours_rate}
+
                                 </span>
                                 <span className='text-sm lg:text-xl font-medium text-[#959595]'>
                                     /12hr
@@ -217,13 +201,14 @@ export default function ProductDescription() {
                         <div className='w-full h-auto  overflow-x-auto'>
                             <Swiper className="mySwiper" slidesPerView={slidesPerView} spaceBetween={50}>
                                 {
-                                    dummyArr.map((item, key) => {
+                                    dates.map((item, key) => {
+                                        console.log(item)
                                         return (
                                             <SwiperSlide key={key}>
 
                                                 <button className='lg:w-16 lg:h-20 w-16 h-20 rounded-lg bg-gray-50 border border-gray-100 hover:border-orange-500 focus:order-orange-500 focus:bg-orange-500/[0.23] hover:bg-orange-500/[0.24] cursor-pointer flex justify-center flex-col items-center '>
                                                     <span className='text-orange-500 font-bold text-md lg:text-lg'>
-                                                        01
+                                                        {item}
                                                     </span>
                                                     <span className='text-[#959595] font-medium text-xs lg:text-sm'>
                                                         Mon
@@ -246,7 +231,7 @@ export default function ProductDescription() {
                         <div className='w-full h-auto flex justify-start gap-2 items-center overflow-x-auto'>
                             <button className='lg:w-16 lg:h-20 w-16 h-20 rounded-lg bg-gray-50 border border-gray-100 hover:border-orange-500 focus:order-orange-500 focus:bg-orange-500/[0.23] hover:bg-orange-500/[0.24] cursor-pointer flex justify-center flex-col items-center '>
                                 <span className='text-orange-500 font-bold text-sm lg:text-lg'>
-                                    $25
+                                ${response?.four_hours_rate}
                                 </span>
                                 <span className='text-[#959595] font-medium text-xs lg:text-sm'>
                                     4hr
@@ -256,7 +241,7 @@ export default function ProductDescription() {
 
                             <button className='lg:w-16 lg:h-20 w-16 h-20 rounded-lg bg-gray-50 border border-gray-100 hover:border-orange-500 focus:order-orange-500 focus:bg-orange-500/[0.23] hover:bg-orange-500/[0.24] cursor-pointer flex justify-center flex-col items-center '>
                                 <span className='text-orange-500 font-bold text-sm lg:text-lg'>
-                                    $100
+                                ${response?.twelve_hours_rate}
                                 </span>
                                 <span className='text-[#959595] font-medium text-xs lg:text-sm'>
                                     12hr
@@ -275,7 +260,7 @@ export default function ProductDescription() {
                             <img src='https://randomuser.me/api/portraits/men/54.jpg' className='lg:w-12 lg:h-12 w-8 h-8  rounded-full' />
                             <div className='w-auto flex flex-col justify-start items-start'>
                                 <h1 className='text-gray-900 font-semibold text-xs lg:text-sm'>
-                                    Jack Anderson
+                                    {response?.owner?.name}
                                 </h1>
                                 <Link to="/product-owner/profile" className='text-[10px] lg:text-xs font-medium hover:underline text-orange-500'>
                                     View Profile
@@ -292,17 +277,17 @@ export default function ProductDescription() {
             </div>
 
             {/* Product Description */}
-            <DescriptionContainer />
+            <DescriptionContainer description={response?.description} />
 
             <span className='w-full h-[1px] bg-[#959595] rounded-full ' />
 
             {/* Reviews */}
-            <ReviewContainer reviews={reviews} />
+            {/* <ReviewContainer reviews={reviews} /> */}
 
             <span className='w-full h-[1px] bg-[#959595] rounded-full ' />
 
             {/* You may also like */}
-            <MayLike products={dummyArr} />
+            {/* <MayLike products={dummyArr} /> */}
 
             <div>
 
