@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { GlobalContext } from '../../context/GlobalContext'
 
 const ImageGallery = ({ images }) => {
 
     const [current, setCurrent] = useState(0)
+    const {imageUrl} = useContext(GlobalContext)
+
 
     return (
         <>
@@ -16,7 +19,7 @@ const ImageGallery = ({ images }) => {
                         images?.map((image, key) => {
                             return (
                                 <div key={key} onClick={() => setCurrent(key)} className='w-20 lg:w-full h-20 border border-gray-200 hover:border-orange-500 focus:border-orange-500 focus-within:border-orange-500 '>
-                                    <img src={image?.image} className='w-full h-full hover:opacity-90 cursor-pointer ' />
+                                    <img src={`${imageUrl}${image?.url}`} className='w-full h-full hover:opacity-90 cursor-pointer ' />
                                 </div>
                             )
                         })
@@ -28,7 +31,7 @@ const ImageGallery = ({ images }) => {
                 </div>
 
                 <div className="w-[70%] h-auto flex items-center justify-center">
-                    <img src={images[current]?.image} className='w-full h-80 lg:h-[28rem] hover:opacity-90 cursor-zoom-in ' />
+                    {images && <img src={`${imageUrl}${images[current]?.url}`} className='w-full h-80 lg:h-[28rem] hover:opacity-90 cursor-zoom-in ' />}
                 </div>
 
             </div>

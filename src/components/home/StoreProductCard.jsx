@@ -12,8 +12,8 @@ const StoreProductCard = ({ product }) => {
 
 
     return (
-        <div className='group w-auto h-56  lg:h-80  cursor-pointer transition-all duration-150 bg-gray-50 hover:bg-gray-100 p-2'>
-            <Link to={product?.id} className='w-full h-full flex flex-col relative'>
+        <div className='group w-1/2 md:w-1/3  h-56 lg:w-1/4 lg:h-80  cursor-pointer transition-all duration-150 bg-gray-50 hover:bg-gray-100 p-2'>
+            <Link to={`/products/${product?.id}`} className='w-full h-full flex flex-col relative'>
                 {/* Verified Icon */}
                 <div className='group absolute z-20 top-2 right-2 flex items-center justify-start  w-auto h-6 p-[2px] rounded-full bg-orange-500 '>
                     <span className='w-5 h-5 rounded-full bg-orange-500 text-white group-hover:bg-white group-hover:text-orange-500 flex items-center justify-center '>

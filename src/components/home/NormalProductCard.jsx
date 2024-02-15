@@ -12,7 +12,7 @@ const NormalProductCard = ({ product }) => {
 
     return (
         <div className='group w-auto h-56  lg:h-80 cursor-pointer transition-all duration-150 bg-gray-50  hover:bg-gray-100 p-2'>
-            <Link to="/product/12" className='w-full h-full flex flex-col'>
+            <Link to={`/products/${product?.id}`} className='w-full h-full flex flex-col'>
                 <img src={image} className='w-full h-[60%] object-cover  mix-blend-multiply' />
 
                 <div className='w-auto h-[40%]  flex flex-col gap-1 mt-2 justify-start items-start'>

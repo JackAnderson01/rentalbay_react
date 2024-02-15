@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react'
 import axios from 'axios';
 import { GlobalContext } from '../../context/GlobalContext';
+import BtnLoader from '../global/BtnLoader';
 
-const DeleteModal = ({ isOpen, onClose, id }) => {
+const DeleteModal = ({ isOpen, onClose, id, setRealTimeReload }) => {
 
     const [loading, setLoading] = useState(false);
 
-    const {baseUrl, setError} = useContext(GlobalContext)
+    const {baseUrl, setError, setSuccess} = useContext(GlobalContext)
 
     const deleteProduct = () => {
         const token = localStorage.getItem("token");
@@ -20,13 +21,15 @@ const DeleteModal = ({ isOpen, onClose, id }) => {
             axios
                 .delete(`${baseUrl}/products/${id}`, { headers })
                 .then((res) => {
-                    console.log(res)
+                    setSuccess(res?.data?.data?.message)
                     onClose()
+                    setRealTimeReload((prev) => !prev)
                     setLoading(false)
 
                 })
                 .catch((error) => {
                     setError(error?.response?.data?.error)
+                    onClose()
                     setLoading(false)
                 });
         } else {
@@ -50,8 +53,8 @@ const DeleteModal = ({ isOpen, onClose, id }) => {
                 </span>
 
                 <div className='w-full h-auto flex justify-end items-center gap-2 mt-2'>
-                    <button onClick={deleteProduct} className='w-auto h-9 rounded-md px-2 flex justify-center items-center text-xs bg-red-500 text-white font-medium'>
-                        Delete
+                    <button onClick={deleteProduct} className='w-20 h-9 rounded-md px-2 flex justify-center items-center text-xs bg-red-500 text-white font-medium'>
+                        {loading ? <BtnLoader /> : "Delete"}
                     </button>
 
                     <button onClick={onClose} className='w-auto h-9 rounded-md px-2 flex justify-center items-center text-xs bg-gray-100 text-black font-medium'>

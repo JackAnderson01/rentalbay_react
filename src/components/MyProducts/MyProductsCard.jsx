@@ -4,7 +4,7 @@ import { GoKebabHorizontal } from "react-icons/go";
 import ProductCrudModal from './ProductCrudModal';
 import { Link } from 'react-router-dom';
 
-const MyProductsCard = ({ product }) => {
+const MyProductsCard = ({ product, setRealTimeReload }) => {
 
     const { imageUrl } = useContext(GlobalContext)
 
@@ -17,10 +17,10 @@ const MyProductsCard = ({ product }) => {
 
     return (
         <div className='group w-1/2 md:w-1/3  h-56 lg:w-1/4 lg:h-80 cursor-pointer transition-all relative duration-150  hover:bg-gray-100 p-2'>
-            <button onClick={toggleModal} className='absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center bg-white shadow-md shadow-black/[0.4]'>
+            <button onClick={toggleModal} className='absolute top-3 right-3 z-20 w-6 h-6 rounded-full flex items-center justify-center bg-white shadow-md shadow-black/[0.4]'>
                 <GoKebabHorizontal className='text-black' />
             </button>
-            <ProductCrudModal isOpen={isCrudOpen} setIsCrudOpen={setIsCrudOpen} product={product} />
+            <ProductCrudModal isOpen={isCrudOpen} setIsCrudOpen={setIsCrudOpen} product={product} setRealTimeReload={setRealTimeReload}/>
             <Link to={`/products/${product?.id}`} className='w-full h-full flex flex-col'>
                 <img src={image} className='w-full h-[60%] object-cover mix-blend-multiply' />
 

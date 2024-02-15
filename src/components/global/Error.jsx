@@ -9,7 +9,7 @@ const Error = () => {
         setTimeout(() => {
             setError(false)
         }, 2000)
-    }, [])
+    })
     return (
         <div className={`fixed top-14 left-0 transition-all duration-150 w-full h-12 bg-red-500 text-white z-20 text-xs lg:text-sm ${error ? "flex translate-y-0" : "-translate-y-full"} px-2 items-center justify-start gap-3`}>
             <MdErrorOutline className='text-lg' />
