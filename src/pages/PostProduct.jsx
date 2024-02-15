@@ -24,7 +24,7 @@ const PostProduct = () => {
     const [city, setCity] = useState("")
     const [category, setCategory] = useState("Electronics");
     const [subCategory, setSubCategory] = useState("Screens");
-    const [quantity, setQuantity] = useState("");
+    const [quantity, setQuantity] = useState(0);
     const [description, setDescription] = useState("");
     const [pricePerFour, setPricePerFour] = useState("");
     const [pricePerTwelve, setPricePerTwelve] = useState("");
@@ -89,6 +89,8 @@ const PostProduct = () => {
             setError("Sub Category cannot be left empty.");
         } else if (quantity == "") {
             setError("Qunatity cannot be left empty.");
+        } else if (parseInt(quantity) < 1) {
+            setError("Qunatity cannot be less than 1");
         } else if (description == "") {
             setError("Description cannot be left empty.");
         } else if (pricePerFour == "") {
