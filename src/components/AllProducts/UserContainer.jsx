@@ -3,6 +3,7 @@ import AllProductsCard from './AllProductsCard'
 import { GlobalContext } from '../../context/GlobalContext'
 import { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
+import MyProductSkeleton from '../MyProducts/MyProductSkeleton'
 
 
 const UserContainer = () => {
@@ -12,6 +13,7 @@ const UserContainer = () => {
     
 
     const [newArrivals, setNewArrivals] = useState([])
+    const dummyArr = [1,2,3,4,5,6,7]
     const [newLoading, setNewLoading] = useState(false);
 
 
@@ -46,6 +48,12 @@ const UserContainer = () => {
   return (
     <div className='flex items-start justify-start w-full h-auto flex-wrap'>
         {
+            newLoading ? 
+            dummyArr?.map((item)=>{
+                return(
+                    <MyProductSkeleton key={item}/>
+                )
+            }) :
             newArrivals?.map((product, key) => (
                 <AllProductsCard product={product} key={key}/>
             ))
