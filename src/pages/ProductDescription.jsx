@@ -16,7 +16,7 @@ import MayLike from '../components/ProductDescription/MayLike';
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import axios from "axios"
 import { GlobalContext } from '../context/GlobalContext';
-import { differenceInDays, addDays, format } from 'date-fns';
+// import { differenceInDays, addDays, format } from 'date-fns';
 
 
 export default function ProductDescription() {
@@ -56,17 +56,17 @@ export default function ProductDescription() {
         getIndividualProduct()
     }, [])
 
-    const generateDateRange = (from, till) => {
-        const dates = [];
-        let currentDate = new Date(from);
+    // const generateDateRange = (from, till) => {
+    //     const dates = [];
+    //     let currentDate = new Date(from);
 
-        while (currentDate <= till) {
-            dates.push(format(currentDate, 'dd'));
-            currentDate = addDays(currentDate, 1);
-        }
+    //     while (currentDate <= till) {
+    //         dates.push(format(currentDate, 'dd'));
+    //         currentDate = addDays(currentDate, 1);
+    //     }
 
-        return dates;
-    };
+    //     return dates;
+    // };
 
 
     const [dates, setDates] = useState([]);
@@ -84,9 +84,9 @@ export default function ProductDescription() {
         };
     }, []);
 
-    useEffect(() => {
-        setDates(generateDateRange(new Date(response?.available_from), new Date(response?.available_till)))
-    }, [response])
+    // useEffect(() => {
+    //     setDates(generateDateRange(new Date(response?.available_from), new Date(response?.available_till)))
+    // }, [response])
 
 
 
