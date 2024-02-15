@@ -3,6 +3,7 @@ import UserContainer from "../components/AllProducts/UserContainer";
 import MyProductsContainer from "../components/MyProducts/MyProductsContainer";
 import ChangePassForm from "../components/auth/ChangePass/ChangePassForm";
 import LoginForm from "../components/auth/Login/LoginForm";
+import PasswordUpdateNotifier from "../components/auth/PasswordUpdated/PasswordUpdateNotifier";
 import RegisterForm from "../components/auth/Register/RegisterForm";
 import VerifyEmailForm from "../components/auth/VerifyEmail/VerifyEmailForm";
 import VerifyEmailOtp from "../components/auth/VerifyEmailOtp/VerifyEmailOtpForm";
@@ -33,6 +34,11 @@ export const loginRoutes = [
         'name': 'Change Password',
         'url' : '/change-password',
         'page': <ChangePassForm />
+    },
+    {
+        'name': 'Password Updated',
+        'url' : '/password-updated',
+        'page': <PasswordUpdateNotifier />
     },
     {
         'name': 'Verify Email',
