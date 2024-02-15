@@ -64,9 +64,9 @@ const VerifyEmailForm = () => {
 
       </div>
 
-      {formError && <FormError />}
 
       <div className="w-full h-auto mt-0 lg:mt-8 mb-4 flex flex-col  justify-start items-start">
+        {formError && <FormError />}
         <div className='w-full h-auto flex flex-col gap-[2px]'>
           <AuthInput text={"Email Address"} icon={<HiOutlineMail />} state={email} setState={setEmail} type={"email"} />
           {
