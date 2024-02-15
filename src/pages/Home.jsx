@@ -49,8 +49,8 @@ const Home = () => {
         <div className={`w-full h-auto flex flex-col  justify-start items-start`}>
             <Hero />
             <CategoriesContainer />
-            <NormalProductContainer title={"New Arrivals"} link={"/user-products"} products={newArrivals} />
-            <StoreProductContainer title={"RB Mall"} link={"/store-products"} products={newArrivals} />
+            <NormalProductContainer title={"New Arrivals"} link={"/user-products"} products={newArrivals} loading={newLoading} />
+            <StoreProductContainer title={"RB Mall"} link={"/store-products"} products={newArrivals}  loading={newLoading}/>
         </div>
     )
 }
