@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useContext, useState } from 'react'
 import AuthButton from '../AuthButton';
 import { Link } from 'react-router-dom';
