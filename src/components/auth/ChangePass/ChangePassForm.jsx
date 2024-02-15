@@ -57,7 +57,7 @@ const ChangePassForm = () => {
       const otp = localStorage.getItem("otp")
       setLoading(true)
       axios
-        .put(`${baseUrl}/users/update/forgotten-password`, {
+        .post(`${baseUrl}/users/update/forgotten-password`, {
           otp: otp,
           new_password : password
         })
