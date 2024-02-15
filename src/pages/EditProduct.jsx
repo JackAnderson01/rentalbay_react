@@ -151,7 +151,6 @@ const EditProduct = () => {
             axios
                 .put(`${baseUrl}/products/update/${params?.id}`, data, { headers })
                 .then((res) => {
-                    console.log(res)
                     setLoading(false)
 
                 })
