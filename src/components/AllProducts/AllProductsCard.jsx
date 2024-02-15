@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { GlobalContext } from '../../context/GlobalContext'
 
 
 const AllProductsCard = ({ product }) => {
+
+    const {imageUrl} = useContext(GlobalContext)
+
+    const [image, setImage] = useState(`${imageUrl}${product?.images[0]?.url}`)
+
     return (
         <div className='group w-1/2 md:w-1/3  h-56 lg:w-1/4 lg:h-80 cursor-pointer transition-all duration-150  hover:bg-gray-100 p-2'>
-            <Link to="/product/12" className='w-full h-full flex flex-col'>
-                <img src={product?.image} className='w-full h-[60%] ' />
+            <Link to={`/products/${product?.id}`} className='w-full h-full flex flex-col'>
+                <img src={image} className='w-full h-[60%] ' />
 
                 <div className='w-auto h-[40%]  flex flex-col gap-1 mt-2 justify-start items-start'>
                     <h1 className='text-md lg:text-xl font-bold lg:font-semibold text-gray-900'>
