@@ -1,17 +1,14 @@
-"use client"
-
-import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
-
+import { useNavigate } from 'react-router-dom';
 const PasswordUpdateNotifier = () => {
 
-    const router = useRouter();
+    const navigate = useNavigate();
 
     useEffect(()=>{
         setTimeout(()=>{
-            router.push("/login")
-        },1000)
+            navigate("/login")
+        },2000)
     },[])
 
     return (
